@@ -1,0 +1,29 @@
+{% extends 'base.html'  %}
+{% block title %}Add feedback{%endblock %}
+{% block content %}
+
+<h1 class="display-1">Add feedback</h1>
+<p class="lead">Have Some feedback add it below here</p>
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+    {% for field in form if field.widget.input_type != 'hidden' %}
+
+    <div class="form-group row">
+      {{field.label(class="col-sm-2 col-form-label")}}
+      <div class="col-sm-10">
+        {{field(class="form-control")}}
+      </div>
+      {% for error in field.errors %}
+      <span class="form-text text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+  
+    {% endfor %}
+  
+
+  <button class="btn btn-primary" type="submit">Add</button>
+
+</form>
+{% endblock %}
+

@@ -1,0 +1,58 @@
+{% extends 'base.html'  %}
+{% block title %}{{user.username}} details {%endblock %}
+
+{% block content %}
+
+<h1 class="display-1">{{user.username}} Details</h1>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">{{user.email}}</h6>
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a> -->
+    </div>
+    <form>
+        <button class="btn btn-danger btn-sm"
+                formaction="/users/{{ user.username }}/delete"
+                formmethod="POST">
+          Delete User
+        </button>
+      </form>
+  </div>
+
+
+   <div class="container-md">
+    <p>
+        <a  href="/users/{{user.username}}/feedback/add">
+            Add feedback
+        </a>
+
+    </p>  
+   
+    <ul>
+        {% for feedback in user.feedback%}
+        <li>
+            {{ feedback.title }}
+            <small>{{ feedback.content }}</small>
+        </li>
+        <form>
+            {{form.hidden_tag()}}
+            <button class="btn btn-primary"
+                    formmethod="GET"
+                    formaction="/feedback/{{ feedback.id }}/update">
+              Edit
+            </button>
+            <button class="btn btn-danger"
+                    formmethod="POST"
+                    formaction="/feedback/{{ feedback.id }}/delete">
+              Delete
+            </button>
+          </form>
+        {%endfor%}
+    </ul>
+   </div>
+
+   
+
+{% endblock %}
